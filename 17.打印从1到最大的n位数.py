@@ -36,7 +36,7 @@ def print_number_char_array(number_char_array):
     print
 
 
-def print_to_max_of_digits(n):
+def print_1_to_max_of_n_digits(n):
     if n <= 0:
         return
     number_char_array = ['0' for _ in range(n)]
@@ -44,5 +44,22 @@ def print_to_max_of_digits(n):
         print_number_char_array(number_char_array)
 
 
+def print_1_to_max_of_n_digits_recursively(n):
+    if n <= 0:
+        return
+    number_char_array = ['0' for _ in range(n)]
+    for i in range(10):
+        process(number_char_array, n, 0)
+
+
+def process(number_char_array, length, index):
+    if index == length:
+        print_number_char_array(number_char_array)
+        return
+    for i in range(10):
+        number_char_array[index] = str(i)
+        process(number_char_array, length, index + 1)
+
+
 if __name__ == '__main__':
-    print_to_max_of_digits(2)
+    print_1_to_max_of_n_digits_recursively(2)
