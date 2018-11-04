@@ -25,5 +25,6 @@ def power(base, exponent):
         result = 1.0 / result
     return result
 
+
 if __name__ == '__main__':
-    print pow(2,-1)
+    print pow(2, -1)
