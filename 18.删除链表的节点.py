@@ -33,10 +33,40 @@ def delete_node(head_node, to_be_delete_node):
             next_node.next = None
 
 
+"""
+题目二:
+删除重复节点
+"""
+
+
+def detele_duplicate(head):
+    if not head:
+        return head
+    first = ListNode(-1)
+    first.next = head
+    current_node = head
+    pre_node = first
+    # 从头结点开始遍历到最后一个节点
+    while current_node:
+        next_node = current_node.next
+        if next_node and current_node.value == next_node.value:
+            while next_node and current_node.value == next_node.value:
+                next_node = next_node.next
+            pre_node.next = next_node
+            current_node = next_node
+        else:
+            pre_node = current_node
+            current_node = next_node
+    return first.next
+
+
 if __name__ == '__main__':
-    node1 = ListNode(1)
-    node2 = ListNode(2)
-    node3 = ListNode(3)
+    node1 = ListNode(3)
+    node2 = ListNode(4)
+    node3 = ListNode(4)
+    node4 = ListNode(2)
     node1.next = node2
     node2.next = node3
+    node3.next = node4
+    result = detele_duplicate(node4)
     delete_node(node1, node3)
