@@ -35,7 +35,7 @@ def delete_node(head_node, to_be_delete_node):
 
 """
 题目二:
-删除重复节点
+删除链表中的重复节点，在一个排序的链表中，如何删除重复的节点
 """
 
 
