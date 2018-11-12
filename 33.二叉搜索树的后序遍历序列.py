@@ -66,31 +66,40 @@ def verify_squence_of_BST2(self, sequence):
     if not sequence:
         return False
 
-    # 获取根节点
     root = sequence[-1]
 
-    # 根据二叉搜索树的性质，左孩子的每个结点的值都小于根节点
-    for i in range(len(sequence)):
-        if sequence[i] > root:
+    left_sub_tree_begin = 0
+    left_sub_tree_end = 0
+    for left_sub_tree_end in range(len(sequence)):
+        if sequence[left_sub_tree_end] > root:
             break
 
-    # 判断是否右孩子的每个结点的值都大于根结点
-    for j in range(i, len(sequence)):
-        if sequence[j] < root:
+    right_sub_tree_begin = left_sub_tree_end
+    right_sub_tree_end = right_sub_tree_begin
+    for right_sub_tree_end in range(right_sub_tree_begin, len(sequence)):
+        if sequence[right_sub_tree_end] < root:
             return False
 
-    left = True
-    # i > 0 的时候证明有左孩子
-    if i > 0:
-        # 递归遍历左孩子
-        left = self.VerifySquenceOfBST(sequence[: i])
+    # left_sub_tree_begin是左子树开始的数
+    # left_sub_tree_end是左子树结束的下一个数
+    # 如果left_sub_tree_begin<left_sub_tree_end,说明还有左子树
+    # 如果left_sub_tree_begin==left_sub_tree_end,说明没有左子树了,直接返回True
+    if left_sub_tree_end > left_sub_tree_begin:
+        is_left_sub_tree_BST = verify_squence_of_BST2(sequence[
+                                                      left_sub_tree_begin:left_sub_tree_end])
+    else:
+        is_left_sub_tree_BST = True
 
-    right = True
-    # 证明有右孩子，通过i的值不在最后一个结点判断，len(sequence) - 1 为sequence的最后一个结点
-    if i < len(sequence) - 1:
-        right = self.VerifySquenceOfBST(sequence[i: -1])
-
-    return left and right
+    # right_sub_tree_begin是左子树开始的数
+    # right_sub_tree_end是左子树结束的下一个数
+    # 如果right_sub_tree_begin<right_sub_tree_end,说明还有右子树
+    # 如果right_sub_tree_begin==right_sub_tree_end,说明没有右子树了,直接返回True
+    if right_sub_tree_begin < right_sub_tree_end:
+        is_right_sub_tree_BST = verify_squence_of_BST2(
+            sequence[left_sub_tree_begin: left_sub_tree_begin])
+    else:
+        is_right_sub_tree_BST = True
+    return is_left_sub_tree_BST and is_right_sub_tree_BST
 
 
 if __name__ == '__main__':
