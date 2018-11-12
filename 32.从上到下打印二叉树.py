@@ -32,7 +32,7 @@ def print_from_top_to_bottom(root):
 """
 
 
-def print_form_top_to_bottom_each_row(root):
+def print_form_top_to_bottom_split_row(root):
     if not root:
         return
     queue = list()
@@ -54,6 +54,39 @@ def print_form_top_to_bottom_each_row(root):
             this_level_count = next_level_count
             next_level_count = 0
 
+
+"""
+之字形打印二叉树
+"""
+
+
+def print_form_top_to_bottom_zig(root):
+    if not root:
+        return
+    direction = True
+    this_level_stack = list()
+    next_level_stack = list()
+    this_level_stack.append(root)
+    while this_level_stack:
+        # 方向
+        current_node = this_level_stack.pop()
+        print current_node.value
+        if direction:
+            if current_node.left:
+                next_level_stack.append(current_node.left)
+            if current_node.right:
+                next_level_stack.append(current_node.right)
+        else:
+            if current_node.right:
+                next_level_stack.append(current_node.right)
+            if current_node.left:
+                next_level_stack.append(current_node.left)
+
+        if not this_level_stack:
+            this_level_stack, next_level_stack = next_level_stack, this_level_stack
+            direction = not direction
+
+
 if __name__ == '__main__':
     node1 = BinaryTreeNode(8)
     node2 = BinaryTreeNode(8)
@@ -69,4 +102,4 @@ if __name__ == '__main__':
     node5.left = node6
     node5.right = node7
 
-    print_form_top_to_bottom_each_row(node1)
+    print_form_top_to_bottom_zig(node1)
