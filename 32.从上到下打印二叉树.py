@@ -19,12 +19,40 @@ def print_from_top_to_bottom(root):
     queue.append(root)
     while queue:
         current_node = queue.pop(0)
-        print current_node.value
+        print current_node.value,
         if current_node.left:
             queue.append(current_node.left)
         if current_node.right:
             queue.append(current_node.right)
 
+
+"""
+题目二:分行从上到下打印二叉树
+从上到下按层打印二叉树,同一层的节点按从左到右的顺序打印,每一层打印一行.
+"""
+
+
+def print_form_top_to_bottom_each_row(root):
+    if not root:
+        return
+    queue = list()
+    queue.append(root)
+    next_level_count = 0
+    this_level_count = 1
+    while queue:
+        current_node = queue.pop(0)
+        print current_node.value,
+        this_level_count -= 1
+        if current_node.left:
+            queue.append(current_node.left)
+            next_level_count += 1
+        if current_node.right:
+            queue.append(current_node.right)
+            next_level_count += 1
+        if this_level_count == 0:
+            print
+            this_level_count = next_level_count
+            next_level_count = 0
 
 if __name__ == '__main__':
     node1 = BinaryTreeNode(8)
@@ -41,4 +69,4 @@ if __name__ == '__main__':
     node5.left = node6
     node5.right = node7
 
-    print_from_top_to_bottom(node1)
+    print_form_top_to_bottom_each_row(node1)
