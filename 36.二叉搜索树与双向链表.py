@@ -3,8 +3,6 @@
 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表
 """
 
-last_node_in_list = None
-
 
 class BinaryTreeNode(object):
     def __init__(self, value, left=None, right=None):
@@ -13,37 +11,38 @@ class BinaryTreeNode(object):
         self.right = right
 
 
-def convert(root):
-    global last_node_in_list
-    convert_node(root)
-    head = last_node_in_list
-    while head and head.left:
-        head = head.left
-    return head
+class Soulution():
+    def __init__(self):
+        self.last_node_in_list = None
 
+    def convert(self, root):
+        def convert_node(root):
+            # 如果遍历到空节点，不处理直接返回
+            if not root:
+                return
+            # 如果遍历到不是空节点
+            else:
+                # 如果节点有左子树,递归调整左子树
+                if root.left:
+                    convert_node(root.left)
 
-def convert_node(root):
-    global last_node_in_list
-    # 如果遍历到空节点，不处理直接返回
-    if not root:
-        return
-    # 如果遍历到不是空节点
-    else:
-        # 如果节点有左子树,递归调整左子树
-        if root.left:
-            convert_node(root.left)
+                # root的left指向self.last_node_in_list
+                root.left = self.last_node_in_list
+                # self.last_node_in_list的right指向root,self.last_node_in_list有可能为None
+                if self.last_node_in_list:
+                    self.last_node_in_list.right = root
 
-        # root的left指向last_node_in_list
-        root.left = last_node_in_list
-        # last_node_in_list的right指向root,last_node_in_list有可能为None
-        if last_node_in_list:
-            last_node_in_list.right = root
+                # 该节点成为self.last_node_in_list
+                self.last_node_in_list = root
+                if root.right:
+                    convert_node(root.right)
+            return self.last_node_in_list
 
-        # 该节点成为last_node_in_list
-        last_node_in_list = root
-        if root.right:
-            convert_node(root.right)
-    return last_node_in_list
+        convert_node(root)
+        head = self.last_node_in_list
+        while head and head.left:
+            head = head.left
+        return head
 
 
 if __name__ == '__main__':
@@ -62,5 +61,5 @@ if __name__ == '__main__':
     node3.left = node6
     node3.right = node7
 
-    result = convert(node1)
+    result = Soulution().convert(node1)
     print result
