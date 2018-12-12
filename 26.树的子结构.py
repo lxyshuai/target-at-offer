@@ -18,9 +18,9 @@ def has_subtree(root1, root2):
         if root1.value == root2.value:
             result = does_tree1_have_tree2(root1, root2)
         if not result:
-            result = does_tree1_have_tree2(root1.left, root2)
+            result = has_subtree(root1.left, root2)
         if not result:
-            result = does_tree1_have_tree2(root1.right, root2)
+            result = has_subtree(root1.right, root2)
     return result
 
 
