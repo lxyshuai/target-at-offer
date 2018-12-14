@@ -37,5 +37,29 @@ class Solution(object):
         return nums[:k]
 
 
+import heapq
+
+
+class Solution(object):
+    def get_least_number(self, nums, k):
+        heapq.heapify(nums)
+        result = []
+        for _ in range(k):
+            result.append(heapq.heappop(nums))
+        return result
+
+
+class Solution(object):
+    def get_least_number(self, nums, k):
+        min_heap = [float('-inf')] * k
+        nums = [-number for number in nums]
+        heapq.heapify(min_heap)
+        for number in nums:
+            if number > min_heap[0]:
+                heapq.heappop(min_heap)
+                heapq.heappush(min_heap, number)
+        return [-number for number in min_heap]
+
+
 if __name__ == '__main__':
     print Solution().get_least_number(range(100, -1, -1), 5)
